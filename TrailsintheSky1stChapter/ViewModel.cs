@@ -16,6 +16,8 @@ namespace TrailsintheSky1stChapter
 
 		public Info Info { get; init; } = Info.Instance();
 
+		public int FileFormat { get; set; } = 0;
+
 		public ICommand OpenFileCommand { get; init; }
 		public ICommand SaveFileCommand { get; init; }
 		public ICommand ImportFileCommand { get; init; }
@@ -73,15 +75,23 @@ namespace TrailsintheSky1stChapter
 
 		private void OpenFile(object? parameter)
 		{
-			var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-				@"Saved Games\Falcom\Trails in the Sky 1st Chapter\savedata");
-			if (!System.IO.Directory.Exists(path)) return;
-
 			var dlg = new OpenFileDialog();
-			dlg.Filter = "user.dat|user.dat";
-			dlg.InitialDirectory = path;
+			if(FileFormat == 0)
+			{
+				var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+					@"Saved Games\Falcom\Trails in the Sky 1st Chapter\savedata");
+
+				if (!System.IO.Directory.Exists(path)) return;
+				dlg.Filter = "user.dat|user.dat";
+				dlg.InitialDirectory = path;
+			}
+			else
+			{
+				dlg.Filter = "data.dat|data.dat";
+			}
+
 			if (dlg.ShowDialog() == false) return;
-			if (!SaveData.Instance().Open(dlg.FileName, false)) return;
+			if (!SaveData.Instance().Open(dlg.FileName, false, FileFormat == 0)) return;
 
 			Initialize();
 		}

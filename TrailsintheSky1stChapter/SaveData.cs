@@ -12,6 +12,7 @@ namespace TrailsintheSky1stChapter
 		private String mFileName = String.Empty;
 		private Byte[]? mBuffer = null;
 		private readonly System.Text.Encoding mEncode = System.Text.Encoding.UTF8;
+		private IFileFormat mFileFormat;
 		private readonly uint Adventure = 0;
 
 		private SaveData()
@@ -22,21 +23,13 @@ namespace TrailsintheSky1stChapter
 			return mThis;
 		}
 
-		public bool Open(String filename, bool force)
+		public bool Open(String filename, bool force, bool isSteam)
 		{
 			if (!System.IO.File.Exists(filename)) return false;
 
-			using (var decompressor = new ZstdNet.Decompressor())
-			{
-				try
-				{
-					mBuffer = decompressor.Unwrap(System.IO.File.ReadAllBytes(filename));
-				}
-				catch
-				{
-					return false;
-				}
-			}
+			mFileFormat = isSteam ? new FileFormatSteam() : new FileFormatSwitch();
+
+			mBuffer = mFileFormat.Load(filename);
 
 			if (!force)
 			{
@@ -60,13 +53,7 @@ namespace TrailsintheSky1stChapter
 			var checksum = CalcCheckSum();
 			WriteNumber(0x08, 4, checksum);
 
-			Byte[] buffer = Array.Empty<Byte>();
-			using (var compressor = new ZstdNet.Compressor())
-			{
-				buffer = compressor.Wrap(mBuffer);
-			}
-
-			System.IO.File.WriteAllBytes(mFileName, buffer);
+			mFileFormat.Save(mFileName, mBuffer);
 			return true;
 		}
 

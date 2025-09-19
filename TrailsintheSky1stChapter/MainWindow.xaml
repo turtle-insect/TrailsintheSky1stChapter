@@ -23,6 +23,12 @@
 				<MenuItem Header="Export" Command="{Binding ExportFileCommand}"/>
 			</MenuItem>
 		</Menu>
+		<ToolBar DockPanel.Dock="Top">
+			<ComboBox SelectedIndex="{Binding FileFormat}">
+				<ComboBoxItem Content="STEAM"/>
+				<ComboBoxItem Content="Switch"/>
+			</ComboBox>
+		</ToolBar>
 		<TabControl>
 			<TabItem Header="General">
 				<Grid>
@@ -37,7 +43,7 @@
 						<RowDefinition/>
 						<RowDefinition/>
 						<RowDefinition/>
-						<RowDefinition Height="3*"/>
+						<RowDefinition Height="2*"/>
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>
@@ -93,7 +99,7 @@
 							<RowDefinition/>
 							<RowDefinition/>
 							<RowDefinition/>
-							<RowDefinition Height="5*"/>
+							<RowDefinition Height="4*"/>
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition/>
