@@ -12,7 +12,7 @@ namespace TrailsintheSky1stChapter
 		private String mFileName = String.Empty;
 		private Byte[]? mBuffer = null;
 		private readonly System.Text.Encoding mEncode = System.Text.Encoding.UTF8;
-		private IFileFormat mFileFormat;
+		private IFileFormat mFileFormat = new FileFormatSteam();
 		private readonly uint Adventure = 0;
 
 		private SaveData()
@@ -27,7 +27,7 @@ namespace TrailsintheSky1stChapter
 		{
 			if (!System.IO.File.Exists(filename)) return false;
 
-			mFileFormat = isSteam ? new FileFormatSteam() : new FileFormatSwitch();
+			if (!isSteam) mFileFormat = new FileFormatSwitch();
 
 			mBuffer = mFileFormat.Load(filename);
 
