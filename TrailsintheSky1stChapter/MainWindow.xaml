@@ -24,10 +24,7 @@
 			</MenuItem>
 		</Menu>
 		<ToolBar DockPanel.Dock="Top">
-			<ComboBox SelectedIndex="{Binding FileFormat}">
-				<ComboBoxItem Content="STEAM"/>
-				<ComboBoxItem Content="Switch"/>
-			</ComboBox>
+			<ComboBox ItemsSource="{Binding PlatForms}" SelectedIndex="{Binding PlatFormIndex}"/>
 		</ToolBar>
 		<TabControl>
 			<TabItem Header="General">

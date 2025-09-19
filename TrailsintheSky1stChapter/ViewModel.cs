@@ -16,7 +16,10 @@ namespace TrailsintheSky1stChapter
 
 		public Info Info { get; init; } = Info.Instance();
 
-		public int FileFormat { get; set; } = 0;
+		public SaveData.PlatForm[] PlatForms { get; init; } = [
+			SaveData.PlatForm.STEAM, SaveData.PlatForm.Switch,
+		];
+		public int PlatFormIndex { get; set; } = 0;
 
 		public ICommand OpenFileCommand { get; init; }
 		public ICommand SaveFileCommand { get; init; }
@@ -76,7 +79,7 @@ namespace TrailsintheSky1stChapter
 		private void OpenFile(object? parameter)
 		{
 			var dlg = new OpenFileDialog();
-			if(FileFormat == 0)
+			if (PlatForms[PlatFormIndex] == SaveData.PlatForm.STEAM)
 			{
 				var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
 					@"Saved Games\Falcom\Trails in the Sky 1st Chapter\savedata");
@@ -91,7 +94,7 @@ namespace TrailsintheSky1stChapter
 			}
 
 			if (dlg.ShowDialog() == false) return;
-			if (!SaveData.Instance().Open(dlg.FileName, false, FileFormat == 0)) return;
+			if (!SaveData.Instance().Open(dlg.FileName, false, PlatForms[PlatFormIndex])) return;
 
 			Initialize();
 		}

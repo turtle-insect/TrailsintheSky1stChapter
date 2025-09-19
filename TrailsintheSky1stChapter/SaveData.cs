@@ -8,6 +8,12 @@ namespace TrailsintheSky1stChapter
 {
 	internal class SaveData
 	{
+		public enum PlatForm
+		{
+			STEAM,
+			Switch,
+		}
+
 		private static SaveData mThis = new SaveData();
 		private String mFileName = String.Empty;
 		private Byte[]? mBuffer = null;
@@ -23,11 +29,11 @@ namespace TrailsintheSky1stChapter
 			return mThis;
 		}
 
-		public bool Open(String filename, bool force, bool isSteam)
+		public bool Open(String filename, bool force, PlatForm platform)
 		{
 			if (!System.IO.File.Exists(filename)) return false;
 
-			if (!isSteam) mFileFormat = new FileFormatSwitch();
+			if (platform == PlatForm.Switch) new FileFormatSwitch();
 
 			mBuffer = mFileFormat.Load(filename);
 
