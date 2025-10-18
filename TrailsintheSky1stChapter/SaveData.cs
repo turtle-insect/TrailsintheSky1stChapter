@@ -33,7 +33,16 @@ namespace TrailsintheSky1stChapter
 		{
 			if (!System.IO.File.Exists(filename)) return false;
 
-			if (platform == PlatForm.Switch) new FileFormatSwitch();
+			switch(platform)
+			{
+				case PlatForm.STEAM:
+					mFileFormat = new FileFormatSteam();
+					break;
+
+				case PlatForm.Switch:
+					mFileFormat = new FileFormatSwitch();
+					break;
+			}
 
 			mBuffer = mFileFormat.Load(filename);
 
