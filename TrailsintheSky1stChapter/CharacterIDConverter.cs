@@ -14,7 +14,7 @@ namespace TrailsintheSky1stChapter
 		{
 			uint id = (uint)value;
 			var info = Info.Instance().Search(Info.Instance().Chara, id);
-			if (info == null) return $"ID:{id:x4}";
+			if (info == null) return $"ID:{id}";
 
 			return info.Name;
 		}
