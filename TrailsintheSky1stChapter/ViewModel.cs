@@ -74,18 +74,14 @@ namespace TrailsintheSky1stChapter
 		private void OpenFile(object? parameter)
 		{
 			var dlg = new OpenFileDialog();
+			dlg.Filter = "dat|*.dat";
 			if (PlatForms[PlatFormIndex] == SaveData.PlatForm.STEAM)
 			{
 				var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
 					@"Saved Games\Falcom\Trails in the Sky 1st Chapter\savedata");
 
 				if (!System.IO.Directory.Exists(path)) return;
-				dlg.Filter = "user.dat|user.dat";
 				dlg.InitialDirectory = path;
-			}
-			else
-			{
-				dlg.Filter = "data.dat|data.dat";
 			}
 
 			if (dlg.ShowDialog() == false) return;

@@ -31,7 +31,7 @@ namespace TrailsintheSky1stChapter
 
 		public bool HasHistory
 		{
-			get => SaveData.Instance().ReadBit(mAddress + 2,1);
+			get => SaveData.Instance().ReadBit(mAddress + 2, 1);
 			set => SaveData.Instance().WriteBit(mAddress + 2, 1, value);
 		}
 	}
