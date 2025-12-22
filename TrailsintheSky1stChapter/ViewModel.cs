@@ -21,6 +21,7 @@ namespace TrailsintheSky1stChapter
 		public ICommand ImportFileCommand { get; init; }
 		public ICommand ExportFileCommand { get; init; }
 		public ICommand ChoicePartyCommand { get; init; }
+		public ICommand DebugCommand { get; init; }
 
 		public General General { get; init; } = new();
 		public ObservableCollection<Item> Items { get; init; } = new();
@@ -35,6 +36,7 @@ namespace TrailsintheSky1stChapter
 			ImportFileCommand = new CommandAction(ImportFile);
 			ExportFileCommand = new CommandAction(ExportFile);
 			ChoicePartyCommand = new CommandAction(ChoiceParty);
+			DebugCommand = new CommandAction(Debug);
 		}
 
 		private void Initialize()
@@ -123,6 +125,16 @@ namespace TrailsintheSky1stChapter
 			dlg.ShowDialog();
 
 			number.Value = dlg.ID;
+		}
+
+		private void Debug(object? parameter)
+		{
+			for(uint i = 0; i < 98; i++)
+			{
+				var address = 0x11784C + i * 4;
+				SaveData.Instance().WriteNumber(address, 2, i + 1);
+				SaveData.Instance().WriteNumber(address + 2, 2, 0x0B);
+			}
 		}
 	}
 }
